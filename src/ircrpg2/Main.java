@@ -106,13 +106,7 @@ public class Main {
     rpgBot.connect();
     String line;
     while (!"quit".equals(line = System.console().readLine())) {
-        if ("translate".equals(line))  {for(Bot bot : otherBots) bot.setTranslate(true);
-        System.out.println("Enabling translation");
-        } //Very hackish. Create Layers for such stuff!
 
-        if ("notranslate".equals(line)) { for(Bot bot : otherBots) bot.setTranslate(false);
-        System.out.println("Disabling translation");
-        }
     }
     System.out.println("Shutdown sequence");
     synchronized (defaultWorld) {

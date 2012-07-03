@@ -3,8 +3,6 @@ package ircrpg2.messaging.irc;
 import ircrpg2.messaging.*;
 import java.io.*;
 import org.schwering.irc.lib.*;
-import com.google.api.translate.Language;
-import com.google.api.translate.Translate;
 import java.util.*;
 
 public class Bot implements MessageTarget, MessagingService {
@@ -20,7 +18,6 @@ public class Bot implements MessageTarget, MessagingService {
     private Timer connectionTimer;
     private IRCEventListener eventHandler;
     private boolean timerOn;
-    private boolean translate;
     String defaultChannel;
 
     public String getUser() {
@@ -53,16 +50,11 @@ public class Bot implements MessageTarget, MessagingService {
 
         connectionTimer = new Timer();
         timerOn = false;
-        translate = false;
-        Translate.setHttpReferrer("http://violetsky.ch");
         this.eventHandler = new MainEventHandler(this, commandHandler);
         setupConn();
 
 
 
-    }
-    public void setTranslate(boolean translate) {
-    this.translate = translate;
     }
 
     public synchronized void connect() {
@@ -131,19 +123,9 @@ public class Bot implements MessageTarget, MessagingService {
             if (notice) {
                 
                 conn.doNotice(channel, msg);
-                                if (translate) {
-                try {
-                    conn.doNotice(channel, "<Translation> " + Translate.execute(msg, Language.GERMAN, Language.ENGLISH));
-                } catch (Exception ex) {System.err.println("Translation failed: " + ex);}
-                }
             }
             else {
                 conn.doPrivmsg(channel, msg);
-                if (translate) {
-                try {
-                    conn.doPrivmsg(channel, "<Translation> " + Translate.execute(msg, Language.GERMAN, Language.ENGLISH));
-                } catch (Exception ex) {System.err.println("Translation failed: " + ex);}
-                }
             }
         } else {
             System.err.println("Not connected, cannot send: (" + channel + ") " + msg);
