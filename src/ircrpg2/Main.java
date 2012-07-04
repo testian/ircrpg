@@ -86,6 +86,7 @@ public class Main {
 
 
     World defaultWorld = new DefaultWorld();
+
     Bot mainBot = new Bot(network, port, nickname, password, name, email, channel, new CommandHandler(defaultWorld));
 
     Bot[] otherBots = new Bot[nickNames.size()+1];
@@ -105,6 +106,22 @@ public class Main {
     }
     rpgBot.connect();
     String line;
+
+    Runtime.getRuntime().addShutdownHook(new Thread() {
+                
+               
+            public void run() {
+        synchronized (defaultWorld) {
+	System.out.println("Shutdown sequence");
+	synchronized (defaultWorld) {
+        System.out.print("Persisting..");
+        defaultWorld.getLibrary().persistPlayers();
+        System.out.println(" done.");
+        rpgBot.teardown("Shutdown signal");
+                }
+                }
+            });
+
     while (!"quit".equals(line = System.console().readLine())) {
 
     }
