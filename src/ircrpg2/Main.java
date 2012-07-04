@@ -107,7 +107,7 @@ public class Main {
     rpgBot.connect();
     String line;
 
-    Runtime.getRuntime().addShutdownHook(new Thread() {
+    Thread hook = new Thread() {
                 
                
             public void run() {
@@ -122,7 +122,8 @@ public class Main {
                 }
                 }
 		}
-            });
+            };
+    Runtime.getRuntime().addShutdownHook(hook);
 
     while (!"quit".equals(line = System.console().readLine())) {
 
@@ -133,6 +134,7 @@ public class Main {
         defaultWorld.getLibrary().persistPlayers();
         System.out.println(" done.");
         rpgBot.teardown("Normal shutdown");
+	System.getRuntime().removeShutdownHook(hook);
         System.exit(0);
     }
     } catch (IOException ex) {
