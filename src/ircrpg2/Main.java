@@ -85,7 +85,7 @@ public class Main {
 
 
 
-    World defaultWorld = new DefaultWorld();
+    final World defaultWorld = new DefaultWorld();
 
     Bot mainBot = new Bot(network, port, nickname, password, name, email, channel, new CommandHandler(defaultWorld));
 
@@ -94,7 +94,7 @@ public class Main {
     for (int i = 0; i < nickNames.size(); i++) {
     otherBots[i+1] = new Bot(network, port, nickNames.get(i), password, name, email, channel, null);
     }
-    LoadBalancer rpgBot = new LoadBalancer(otherBots);
+    final LoadBalancer rpgBot = new LoadBalancer(otherBots);
 
 
     defaultWorld.setMessagingService(rpgBot);
@@ -120,6 +120,7 @@ public class Main {
         rpgBot.teardown("Shutdown signal");
                 }
                 }
+		}
             });
 
     while (!"quit".equals(line = System.console().readLine())) {
