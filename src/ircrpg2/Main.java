@@ -118,7 +118,7 @@ public class Main {
         defaultWorld.getLibrary().persistPlayers();
         System.out.println(" done.");
         rpgBot.teardown("Shutdown signal");
-//	System.exit(0); //Immediately exit, as long as we have the lock.
+	System.halt(0); //Immediately exit, as long as we have the lock.
                 }
                 }
 		}
