@@ -134,7 +134,7 @@ public class Main {
         defaultWorld.getLibrary().persistPlayers();
         System.out.println(" done.");
         rpgBot.teardown("Normal shutdown");
-	System.getRuntime().removeShutdownHook(hook);
+	Runtime.getRuntime().removeShutdownHook(hook);
         System.exit(0);
     }
     } catch (IOException ex) {
